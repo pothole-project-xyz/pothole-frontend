@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../config.js'; // Curly braces ke sath import kiya
+import { BASE_URL } from '@/config'; // Ye '@/' apne aap src ke andar se file utha lega
 import axios from 'axios';
 
 const api = axios.create({

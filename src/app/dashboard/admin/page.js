@@ -1,6 +1,5 @@
 
 'use client';
-import { BASE_URL } from '../../../../config';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -162,7 +161,7 @@ export default function AdminDashboard() {
                 <td className="py-3">
   {r.images && r.images.length > 0 ? (
     <img
-  src={`${BASE_URL}${r.images[0].url}`}
+  src={`https://pothole-backend-70c2.onrender.com${r.images[0].url}`}
   alt="Pothole"
   className="h-[70px] w-[100px] rounded-lg border border-slate-300 object-cover"
 />

@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import api from '../../lib/api';
 
-export default function ResetPasswordPage() {
+// 1. Pehle form ka saara logic is alag component mein daal diya
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token') || '';
@@ -53,5 +54,14 @@ export default function ResetPasswordPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+// 2. Main page component jo ab Vercel build ko khush rakhega
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="text-center mt-20 text-sm">Loading security token...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

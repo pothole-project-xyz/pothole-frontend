@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/config'; // Ye '@/' apne aap src ke andar se file utha lega
+import { BASE_URL } from '../config.js'; // Ye '@/' apne aap src ke andar se file utha lega
 import axios from 'axios';
 
 const api = axios.create({

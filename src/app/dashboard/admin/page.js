@@ -1,6 +1,6 @@
 
 'use client';
-import BASE_URL from '../../../../config.js';
+import { BASE_URL } from '@/config';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';

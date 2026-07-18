@@ -1,6 +1,6 @@
 
 'use client';
-import BASE_URL from '../../config.js';
+import {BASE_URL} from '../config.js';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';

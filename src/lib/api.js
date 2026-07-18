@@ -1,8 +1,8 @@
-import { BASE_URL } from '../config.js'; // Ye '@/' apne aap src ke andar se file utha lega
 import axios from 'axios';
 
+// Seedhe bina import ke live render ka URL daal diya
 const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
+  baseURL: "https://pothole-backend-70c2.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {

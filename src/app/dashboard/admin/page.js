@@ -1,5 +1,6 @@
-'use client';
 
+'use client';
+import BASE_URL from '../../config.js';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -161,7 +162,7 @@ export default function AdminDashboard() {
                 <td className="py-3">
   {r.images && r.images.length > 0 ? (
     <img
-  src={"http://localhost:5000" + r.images[0].url}
+  src={`${BASE_URL}${r.images[0].url}`}
   alt="Pothole"
   className="h-[70px] w-[100px] rounded-lg border border-slate-300 object-cover"
 />

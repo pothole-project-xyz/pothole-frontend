@@ -1,5 +1,6 @@
-'use client';
 
+'use client';
+import BASE_URL from '../../config.js';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
@@ -127,7 +128,7 @@ export default function MapView({ filters }) {
     }
     load();
 
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000', {
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || BASE_URL, {
       transports: ['websocket'],
     });  
     socket.on('report:new', (r) => setReports((prev) => [...prev, r]));  

@@ -1,8 +1,11 @@
-//true matlab local backend chalega, false matlab render wala live backend chalega
-const LOCAL_MODE = true; 
+const LOCAL_MODE = false; // Live mode active!
 
-const BASE_URL = LOCAL_MODE 
-    ? "http://127.0.0.1:5000" 
-    : "https://pothole-backend-ai-2.onrender.com";
+// Core business logic backend ka URL
+export const BASE_URL = LOCAL_MODE 
+  ? "http://127.0.0.1:5000" 
+  : "https://pothole-backend-70c2.onrender.com";
 
-export default BASE_URL;
+// AI/ML prediction backend ka URL
+export const AI_BASE_URL = LOCAL_MODE 
+  ? "http://127.0.0.1:5000" 
+  : "https://pothole-backend-ai-2.onrender.com";

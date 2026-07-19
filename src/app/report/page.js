@@ -60,32 +60,39 @@ export default function ReportPage() {
     }
     setSubmitting(true);
     try {
-  const fd = new FormData();
-  fd.append('latitude', location.lat);
-  fd.append('longitude', location.lng);
-  fd.append('roadName', form.roadName);
-  fd.append('description', form.description);
-  fd.append('severity', form.severity);
-  images.forEach((img) => fd.append('images', img));
+      const fd = new FormData();
+      fd.append('latitude', location.lat);
+      fd.append('longitude', location.lng);
+      fd.append('roadName', form.roadName);
+      fd.append('description', form.description);
+      fd.append('severity', form.severity);
+      images.forEach((img) => fd.append('images', img));
 
-  const { data } = await api.post('/reports', fd, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+      // Token yahan se uthaya hai
+      const token = localStorage.getItem('token'); 
+
+      // Header mein Authorization token add kar diya hai
+      const { data } = await api.post('/reports', fd, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}` 
+        },
+      });
   
-  console.log(data); // Yeh check karne ke liye ki object me kya aa raha hai
+      console.log(data);
 
-  // 🔥 FIX: Check both data.image and data.report.images fallback
-  if (data.image) {
-    setAiImage( 'http://localhost:5000${data.image}');
-  } else if (data.report?.images && data.report.images.length > 0) {
-    // Agar report array ke andar images hain toh pehli image uthao
-    setAiImage( 'http://localhost:5000${data.report.images[0].url}');
-  } else {
-    console.log("No image received");
-  }
-  toast.success(data.duplicate ? 'Confirmed an existing nearby report!' : 'Report submitted successfully!');
-  //router.push('/map');
-} catch (err) {
+      // Localhost hata kar tumhara live backend URL daal diya hai
+      const BACKEND_URL = 'https://pothole-backend-70c2.onrender.com';
+
+      if (data.image) {
+        setAiImage(`${BACKEND_URL}${data.image}`);
+      } else if (data.report?.images && data.report.images.length > 0) {
+        setAiImage(`${BACKEND_URL}${data.report.images[0].url}`);
+      } else {
+        console.log("No image received");
+      }
+      toast.success(data.duplicate ? 'Confirmed an existing nearby report!' : 'Report submitted successfully!');
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to submit report.');
     } finally {
       setSubmitting(false);
@@ -152,28 +159,26 @@ export default function ReportPage() {
             type="file" multiple
             accept="image/*"
             capture="environment"
-      
             onChange={handleFiles}
             className="block w-full text-sm text-slate-500 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-700 hover:file:bg-brand-100"
           />
           {previewUrls.length > 0 && (
             <div className="mt-3 flex gap-3">
               {previewUrls.map((url, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img key={i} src={url} alt="preview" className="h-20 w-20 rounded-lg object-cover" />
               ))}
             </div>
           )}
           {aiImage && (
-                <div className="mt-4">
-                    <p className="mb-2 font-semibold">AI Detection Result</p>
-                    <img 
-                        src={aiImage} 
-                        alt="AI Result" 
-                        className="w-full rounded-lg border" 
-                    />
-                </div>
-            )}
+            <div className="mt-4">
+              <p className="mb-2 font-semibold">AI Detection Result</p>
+              <img 
+                src={aiImage} 
+                alt="AI Result" 
+                className="w-full rounded-lg border" 
+              />
+            </div>
+          )}
         </div>
 
         <button type="submit" disabled={submitting} className="btn-primary w-full">
